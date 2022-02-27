@@ -41,5 +41,5 @@ public class RegisterPage {
     public void clickOnLoginButton(){ loginButton.click();}
 
     @Step("Получаем выскакивающий текст, при не правильном пароле")
-    public String getTextOnSignupPageWhenIncorrectPassword(){return incorrectPasswordText.getText();}
+    public String getValidationMessagePasswordField(){return incorrectPasswordText.getText();}
 }

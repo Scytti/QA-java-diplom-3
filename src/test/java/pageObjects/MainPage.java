@@ -31,7 +31,7 @@ public class MainPage {
     @FindBy(how = How.XPATH, using = "//h1[text()='Соберите бургер']")
     private SelenideElement createBurgerText;
 
-    @FindBy(how = How.CLASS_NAME, using = "AppHeader_header__logo__2D0X2")
+    @FindBy(how = How.XPATH, using = ".//*[starts-with(@class, 'AppHeader_header__logo__2D0X2')]")
     private SelenideElement stellarLogo;
 
     @FindBy(how = How.XPATH, using = "//span[text()='Булки']")

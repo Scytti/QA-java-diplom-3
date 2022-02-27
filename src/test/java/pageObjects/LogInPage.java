@@ -55,7 +55,7 @@ public class LogInPage {
     @Step("Проверяем наличие надписи Вход")
     public void shouldBeVisibleTextIn(){ textIn.shouldBe(Condition.visible);}
 
-    @Step("Проверяем надпись Вход")
+    @Step("Получаем надпись Вход")
     public String getTextOnLoginPage(){return textIn.getText();}
 }
 

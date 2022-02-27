@@ -18,7 +18,11 @@ import static org.junit.Assert.assertTrue;
 public class PersonalAccountTest {
     static MainPage mainPage = null;
     UserOperations userOperations = new UserOperations();
+    PersonalAccount personalAccount = page(PersonalAccount.class);
     LogInPage logInPage;
+
+    private final String CHECKING_CREATE_ORDER_BUTTON_IS_VISIBLE = "Should be visible 'Оформить заказ' button";
+    private final String CHECKING_LOGOUT_BUTTON_IS_VISIBLE = "Should be button 'Выход'";
 
     @Before
     public void before() {
@@ -26,45 +30,47 @@ public class PersonalAccountTest {
         mainPage = open(MainPage.URL, MainPage.class);
         Map<String, String> response = userOperations.register();
 
+
         mainPage.clickOnPersonalAccount();
         this.logInPage = page(LogInPage.class);
         logInPage.fillEmailField(response.get("email"));
         logInPage.fillPasswordField(response.get("password"));
         logInPage.clickOnButtonLogIn();
+    }
+
+    @Test
+    public void checkTransitionByClickingOnPersonalAccountTest(){
+
         mainPage.clickOnPersonalAccount();
+
+        assertTrue(CHECKING_LOGOUT_BUTTON_IS_VISIBLE,personalAccount.isVisibleLogoutButton());
     }
 
     @Test
-    public void CheckTransitionByClickingOnPersonalAccountTest(){
-
-        PersonalAccount personalAccount = page(PersonalAccount.class);
-
-        assertTrue("Should be button 'Выход'",personalAccount.isVisibleLogoutButton());
-    }
-
-    @Test
-    public void CheckClickingOnConstructorFromPersonalAccountTest(){
+    public void checkClickingOnConstructorFromPersonalAccountTest(){
+        mainPage.clickOnPersonalAccount();
 
         mainPage.clickOnConstructorButton();
 
-        assertTrue("Should be visible 'Оформить заказ' button",mainPage.isVisibleCreateOrderButton());
+        assertTrue(CHECKING_CREATE_ORDER_BUTTON_IS_VISIBLE,mainPage.isVisibleCreateOrderButton());
     }
 
     @Test
-    public void CheckClickingOnLogoFromPersonalAccountTest(){
+    public void checkClickingOnLogoFromPersonalAccountTest(){
+        mainPage.clickOnPersonalAccount();
 
         mainPage.clickOnStellarLogo();
 
-        assertTrue("Should be visible 'Оформить заказ' button",mainPage.isVisibleCreateOrderButton());
+        assertTrue(CHECKING_CREATE_ORDER_BUTTON_IS_VISIBLE,mainPage.isVisibleCreateOrderButton());
     }
 
     @Test
-    public void CheckLogoutFromAccountTest(){
+    public void checkLogoutFromAccountTest(){
+        mainPage.clickOnPersonalAccount();
 
-        PersonalAccount personalAccount = page(PersonalAccount.class);
         personalAccount.clickOnLogoutButton();
 
-        assertEquals("Should be text 'Вход'",logInPage.getTextOnLoginPage(), "Вход");
+        assertEquals(CHECKING_LOGOUT_BUTTON_IS_VISIBLE,logInPage.getTextOnLoginPage(), "Вход");
     }
 
     @After

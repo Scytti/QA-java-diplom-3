@@ -20,6 +20,11 @@ public class LoginTest {
     UserOperations userOperations = new UserOperations();
     User user = new User();
 
+    LogInPage logInPage = page(LogInPage.class);
+    RegisterPage registerPage = page(RegisterPage.class);
+
+    private final String CHECKING_CREATE_ORDER_BUTTON_IS_VISIBLE = "Should be visible 'Оформить заказ' button";
+
     @Before
     public void before() {
         System.setProperty("webdriver.chrome.driver", "driver/yandexdriver.exe");// для тестирования в chrome закоменьть строчку
@@ -30,65 +35,59 @@ public class LoginTest {
     }
 
     @Test
-    public void LoginByButtonPersonalAccount(){
+    public void loginByButtonPersonalAccount(){
 
         mainPage.clickOnPersonalAccount();
 
-        LogInPage logInPage = page(LogInPage.class);
         logInPage.fillEmailField(user.getEmail());
         logInPage.fillPasswordField(user.getPassword());
         logInPage.clickOnButtonLogIn();
 
-        assertTrue("Should be visible 'Оформить заказ' button",mainPage.isVisibleCreateOrderButton());
+        assertTrue(CHECKING_CREATE_ORDER_BUTTON_IS_VISIBLE,mainPage.isVisibleCreateOrderButton());
     }
 
     @Test
-    public void LoginByButtonLoginAccount(){
+    public void loginByButtonLoginAccount(){
 
         mainPage.clickOnLoginInAccount();
 
-        LogInPage logInPage = page(LogInPage.class);
         logInPage.fillEmailField(user.getEmail());
         logInPage.fillPasswordField(user.getPassword());
         logInPage.clickOnButtonLogIn();
 
-        assertTrue("Should be visible 'Оформить заказ' button",mainPage.isVisibleCreateOrderButton());
+        assertTrue(CHECKING_CREATE_ORDER_BUTTON_IS_VISIBLE,mainPage.isVisibleCreateOrderButton());
     }
 
     @Test
-    public void LoginByButtonInRegistrationMenu(){
+    public void loginByButtonInRegistrationMenu(){
 
         mainPage.clickOnLoginInAccount();
 
-        LogInPage logInPage = page(LogInPage.class);
         logInPage.clickOnButtonRegistration();
 
-        RegisterPage registerPage = page(RegisterPage.class);
         registerPage.clickOnLoginButton();
 
         logInPage.fillEmailField(user.getEmail());
         logInPage.fillPasswordField(user.getPassword());
         logInPage.clickOnButtonLogIn();
 
-        assertTrue("Should be visible 'Оформить заказ' button",mainPage.isVisibleCreateOrderButton());
+        assertTrue(CHECKING_CREATE_ORDER_BUTTON_IS_VISIBLE,mainPage.isVisibleCreateOrderButton());
     }
 
     @Test
-    public void LoginByButtonInRecoveryPassword(){
+    public void loginByButtonInRecoveryPassword(){
 
         mainPage.clickOnLoginInAccount();
 
-        LogInPage logInPage = page(LogInPage.class);
         logInPage.clickOnRecoveryPasswordButton();
 
-        RegisterPage registerPage = page(RegisterPage.class);
         registerPage.clickOnLoginButton();
 
         logInPage.fillEmailField(user.getEmail());
         logInPage.fillPasswordField(user.getPassword());
         logInPage.clickOnButtonLogIn();
 
-        assertTrue("Should be visible 'Оформить заказ' button",mainPage.isVisibleCreateOrderButton());
+        assertTrue(CHECKING_CREATE_ORDER_BUTTON_IS_VISIBLE,mainPage.isVisibleCreateOrderButton());
     }
     @After
     public void after(){

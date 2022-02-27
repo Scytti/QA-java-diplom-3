@@ -21,6 +21,12 @@ public class RegistrationTest {
     User user = new User();
     UserOperations userOperations = new UserOperations();
 
+    private final String INCORRECT_PASSWORD_MESSAGE = "Should be text 'Некорректный пароль'";
+    private final String CHECKING_CREATE_ORDER_BUTTON_IS_VISIBLE = "Should be visible 'Оформить заказ' button";
+
+    LogInPage logInPage = page(LogInPage.class);
+    RegisterPage registerPage = page(RegisterPage.class);
+
     @Before
     public void before(){
         System.setProperty("webdriver.chrome.driver", "driver/yandexdriver.exe");// для тестирования в chrome закоменьть строчку
@@ -29,16 +35,14 @@ public class RegistrationTest {
         user.setName(faker.name().firstName());
         user.setEmail(faker.internet().emailAddress());
         user.setPassword(faker.internet().password(6,15));;
+
+        mainPage.clickOnPersonalAccount();
     }
 
     @Test
     public void successfulRegistrationTest(){
-        mainPage.clickOnPersonalAccount();
-
-        LogInPage logInPage = page(LogInPage.class);
         logInPage.clickOnButtonRegistration();
 
-        RegisterPage registerPage = page(RegisterPage.class);
         registerPage.fillNameField(user.getName());
         registerPage.fillEmailField(user.getEmail());
         registerPage.fillPasswordField(user.getPassword());
@@ -51,27 +55,24 @@ public class RegistrationTest {
         logInPage.fillPasswordField(user.getPassword());
         logInPage.clickOnButtonLogIn();
 
-        assertTrue("Should be visible 'Оформить заказ' button",mainPage.isVisibleCreateOrderButton());
+        assertTrue(CHECKING_CREATE_ORDER_BUTTON_IS_VISIBLE,mainPage.isVisibleCreateOrderButton());
 
-        userOperations.login(user.getEmail(), user.getPassword());
-        userOperations.delete();
+        userOperations.login(user.getEmail(), user.getPassword());// Логинемся через API, чтобы получить Токен нужный для удаления пользователя
+        userOperations.delete();// Удаляю пользователя
     }
 
     @Test
     public void registrationWithIncorrectPassword(){
         user.setPassword(faker.internet().password(1,5));
-        mainPage.clickOnPersonalAccount();
 
-        LogInPage logInPage = page(LogInPage.class);
         logInPage.clickOnButtonRegistration();
 
-        RegisterPage registerPage = page(RegisterPage.class);
         registerPage.fillNameField(user.getName());
         registerPage.fillEmailField(user.getEmail());
         registerPage.fillPasswordField(user.getPassword());
         registerPage.clickOnRegistrationButton();
 
-        assertEquals("Should be text 'Некорректный пароль'",registerPage.getTextOnSignupPageWhenIncorrectPassword(), "Некорректный пароль");
+        assertEquals(INCORRECT_PASSWORD_MESSAGE,registerPage.getValidationMessagePasswordField(), "Некорректный пароль");
     }
 
     @After
