@@ -1,6 +1,7 @@
 package com;
 
 import com.model.Tokens;
+import com.model.UserLoginResponse;
 import com.model.UserRegisterResponse;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -75,6 +76,22 @@ public class UserOperations {
                 .delete("auth/user")
                 .then()
                 .statusCode(202);
+    }
+
+    public void login(String email, String password){
+        Map<String, String> inputDataMap = new HashMap<>();
+        inputDataMap.put("email", email);
+        inputDataMap.put("password", password);
+        UserLoginResponse response = given()
+                .spec(Base.getBaseSpec())
+                .and()
+                .body(inputDataMap)
+                .when()
+                .post("auth/login")
+                .body()
+                .as(UserLoginResponse.class);
+
+        Tokens.setAccessToken(response.getAccessToken().substring(7));
     }
 
 }
