@@ -2,7 +2,7 @@ package tests;
 
 import org.junit.Before;
 import org.junit.Test;
-import pageObjects.MainPage;
+import com.pageObjects.MainPage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.Assert.assertTrue;

@@ -6,9 +6,9 @@ import com.model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import pageObjects.LogInPage;
-import pageObjects.MainPage;
-import pageObjects.RegisterPage;
+import com.pageObjects.LogInPage;
+import com.pageObjects.MainPage;
+import com.pageObjects.RegisterPage;
 
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.Assert.assertEquals;
@@ -21,7 +21,7 @@ public class RegistrationTest {
     User user = new User();
     UserOperations userOperations = new UserOperations();
 
-    private final String INCORRECT_PASSWORD_MESSAGE = "Should be text 'Некорректный пароль'";
+    private final String INCORRECT_PASSWORD_MESSAGE = "Некорректный пароль";
     private final String CHECKING_CREATE_ORDER_BUTTON_IS_VISIBLE = "Should be visible 'Оформить заказ' button";
 
     LogInPage logInPage = page(LogInPage.class);
@@ -72,7 +72,7 @@ public class RegistrationTest {
         registerPage.fillPasswordField(user.getPassword());
         registerPage.clickOnRegistrationButton();
 
-        assertEquals(INCORRECT_PASSWORD_MESSAGE,registerPage.getValidationMessagePasswordField(), "Некорректный пароль");
+        assertEquals("Should be text" + INCORRECT_PASSWORD_MESSAGE, registerPage.getValidationMessagePasswordField(), INCORRECT_PASSWORD_MESSAGE);
     }
 
     @After

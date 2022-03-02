@@ -1,14 +1,13 @@
 package tests;
 
 import com.UserOperations;
-import com.github.javafaker.Faker;
 import com.model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import pageObjects.LogInPage;
-import pageObjects.MainPage;
-import pageObjects.RegisterPage;
+import com.pageObjects.LogInPage;
+import com.pageObjects.MainPage;
+import com.pageObjects.RegisterPage;
 
 import java.util.Map;
 

@@ -1,13 +1,12 @@
 package tests;
 
 import com.UserOperations;
-import com.model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import pageObjects.LogInPage;
-import pageObjects.MainPage;
-import pageObjects.PersonalAccount;
+import com.pageObjects.LogInPage;
+import com.pageObjects.MainPage;
+import com.pageObjects.PersonalAccount;
 
 import java.util.Map;
 
@@ -23,6 +22,7 @@ public class PersonalAccountTest {
 
     private final String CHECKING_CREATE_ORDER_BUTTON_IS_VISIBLE = "Should be visible 'Оформить заказ' button";
     private final String CHECKING_LOGOUT_BUTTON_IS_VISIBLE = "Should be button 'Выход'";
+    private final String LOGIN_BUTTON_TEXT = "Вход";
 
     @Before
     public void before() {
@@ -70,7 +70,7 @@ public class PersonalAccountTest {
 
         personalAccount.clickOnLogoutButton();
 
-        assertEquals(CHECKING_LOGOUT_BUTTON_IS_VISIBLE,logInPage.getTextOnLoginPage(), "Вход");
+        assertEquals("Should be button" + LOGIN_BUTTON_TEXT,logInPage.getTextOnLoginPage(), LOGIN_BUTTON_TEXT);
     }
 
     @After
